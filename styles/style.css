@@ -1,0 +1,262 @@
+/* Базовые сбросы */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #fff;
+  color: #1a1a1a;
+}
+
+/* Контейнер ограничивает ширину контента и ставит боковые отступы */
+.center {
+  /*
+   * The layout container defines the maximum width of the content area and
+   * adds horizontal padding on either side.  The original implementation
+   * used a max‑width of 1200px which, when combined with the 20px of
+   * horizontal padding on both sides, resulted in a total width that
+   * undershot the intended design by 40px.  According to the design
+   * reference, the content should occupy 1240px inside the container with
+   * the 20px padding already applied.  Adjusting the max‑width to 1240px
+   * keeps the outer margins consistent across breakpoints while matching
+   * the template more closely.
+   */
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Шапка фиксируется поверх баннера и имеет полупрозрачную линию снизу */
+header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  padding: 28px 0;
+  /*
+   * Draw a subtle dividing line between the header and the banner.  A
+   * slightly higher opacity helps the line remain visible against the
+   * varying tones of the hero background.
+   */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+header .center {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Логотип */
+.logo {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+
+/* Навигационное меню */
+nav {
+  display: flex;
+  gap: 32px;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  opacity: 0.92;
+  transition: opacity 0.2s;
+}
+
+nav a:hover {
+  opacity: 1;
+}
+
+/* Секция героя с фоном и затемнением */
+.hero {
+  position: relative;
+  /*
+   * The height of the hero section controls how much breathing room
+   * appears above the catalog.  Increasing the height from 420px to
+   * 500px aligns the hero’s visual proportions closer to the reference
+   * layout and ensures sufficient space below the slogan before the
+   * catalog starts.  A generous bottom margin is applied to create a
+   * clear separation between the banner and the catalog section below.
+   */
+  height: 500px;
+  background-image: url('../images/hero-bg.jpg'),
+    linear-gradient(135deg, #8a9e8a 0%, #c4b49a 50%, #a8977e 100%);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+
+  /*
+   * Increase the bottom margin on the hero so that the next section
+   * (catalog) does not appear to “stick” to the hero.  The additional
+   * breathing room brings the layout closer to the reference design.
+   */
+  margin-bottom: 80px;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.55) 0%,
+    rgba(0, 0, 0, 0.15) 70%,
+    transparent 100%
+  );
+}
+
+/* Контент героя */
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 0 52px 0;
+  width: 100%;
+}
+
+/*
+ * Remove the extra left offset inside the hero section.  The global
+ * `.center` class adds symmetric horizontal padding, which causes the
+ * vertical bar in the heading to sit too far from the viewport edge in
+ * the hero.  Here we override the horizontal padding for the hero’s
+ * container so that the left edge of the text block aligns with the
+ * viewport edge (only the right padding remains so content doesn’t
+ * touch the edge on small screens).
+ */
+.hero .center {
+  padding-left: 0;
+}
+
+.hero-content .center {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Основной заголовок героя */
+.hero h1 {
+  font-size: 42px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 10px;
+  /*
+   * Reduce the maximum width of the hero heading so that the slogan
+   * naturally wraps to two lines rather than stretching across the
+   * screen.  A narrower max‑width causes the line break to occur
+   * closer to the middle of the banner, matching the design more
+   * closely.
+   */
+  /*
+   * Allow the heading to occupy more horizontal space.  Expanding
+   * the max‑width helps the two lines of text better resemble the
+   * proportions shown in the design where the slogan spans further
+   * across the banner without overflowing onto a third line.
+   */
+  max-width: 520px;
+  border-left: 4px solid rgba(255, 255, 255, 0.3);
+  padding-left: 12px;
+}
+
+/* Подзаголовок героя */
+.hero-subtitle {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 24px;
+  font-weight: 400;
+}
+
+/* Ссылка-приглашение в каталог */
+.hero-link {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s;
+}
+
+.hero-link:hover {
+  color: #fff;
+}
+
+/* Каталог */
+.catalog {
+  padding: 80px 0 60px;
+}
+
+.catalog h2 {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 28px;
+  color: #1a1a1a;
+}
+
+/* Сетка товаров */
+.products-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.product-card {
+  flex: 1 1 calc(33.333% - 16px);
+  min-width: 200px;
+}
+
+.product-card img {
+  width: 100%;
+  /*
+   * Increase the height of the product preview images.  The earlier
+   * implementation used a height of 185px, which cropped the images
+   * noticeably shorter than in the provided template.  Bumping the
+   * height to 260px gives each card a more balanced aspect ratio and
+   * fills the card area more in line with the mockup.
+   */
+  height: 260px;
+  object-fit: cover;
+  display: block;
+  border-radius: 2px;
+  background: linear-gradient(135deg, #d8d0c8 0%, #c4b49a 100%);
+}
+
+.product-card h3 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-top: 12px;
+  margin-bottom: 6px;
+  color: #1a1a1a;
+}
+
+.product-card p {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.product-card .price {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+/* Футер */
+footer {
+  border-top: 1px solid #e8e8e8;
+  padding: 28px 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+}
